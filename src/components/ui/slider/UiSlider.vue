@@ -19,21 +19,19 @@
 			</div>
 		</div>
 <!--		<div class="swiper-pagination"></div>-->
-
-<!--		<div class="swiper-button-prev nav-button"></div>-->
-<!--		<div class="swiper-button-next nav-button"></div>-->
-
 <!--		<div class="swiper-scrollbar"></div>-->
-
+		<UiSliderButtons
+				v-if="props.controls.hasNavigation"
+				:position="props.controls.navigationPosition"
+		/>
 		<div v-if="showCountButtonsControls"
 		     class="count-buttons-line"
-		     :class="`_${props.controls.countButtonsPosition}`"
 		>
 			<UiSliderCount v-if="props.controls.showCount"
 			               :active="countActive"
 			               :all="props.slides.length"
 			/>
-			<UiSliderButtons v-if="props.controls.hasNavigation" />
+
 		</div>
 		<UiSliderPagination v-if="props.controls.showPagination" />
 	</div>
@@ -44,11 +42,10 @@ import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
 import { ref, onMounted } from 'vue';
 import UiSliderCount from '@/components/ui/slider/UiSliderCount.vue';
-import UiSliderButtons from '@/components/ui/slider/UiSliderButtons.vue';
+import UiSliderButtons from '@/components/ui/slider/UiSliderNavigation.vue';
 import UiSliderPagination from '@/components/ui/slider/UiSliderPagination.vue';
 import { navigationButtonNextClass, navigationButtonPrevClass } from '@/components/ui/slider/constants';
-
-type CountPosition = 'bottom-right' | 'bottom-left' | 'top-left' | 'top-right';
+import type { NavigationPosition } from '@/types';
 //todo: have Navigation, Paginnation (boolean), pagination type fraction
 interface Slide {
 	id: number,
@@ -63,7 +60,7 @@ interface Controls {
 	showPagination?: boolean,
 	showCount?: boolean,
 	hasNavigation?: boolean,
-	countButtonsPosition?: CountPosition,
+	navigationPosition?: NavigationPosition,
 	paginationType?: null,
 }
 
@@ -81,7 +78,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
 	slider: {},
 	controls: {
-		countButtonsPosition: 'bottom-right',
+		navigationPosition: 'bottom-right',
 		hasNavigation: true,
 		showCount: true,
 	},
@@ -213,25 +210,5 @@ const initSlider = () => {
 	height: fit-content;
 	opacity: 1;
 	transition: opacity .3s ease-in-out;
-
-	&._bottom-right {
-		right: 24px;
-		bottom: 24px;
-	}
-
-	&._bottom-left {
-		left: 24px;
-		bottom: 24px;
-	}
-
-	&._top-right {
-		right: 24px;
-		top: 24px;
-	}
-
-	&._top-left {
-		left: 24px;
-		top: 24px;
-	}
 }
 </style>
