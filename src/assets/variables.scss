@@ -16,7 +16,14 @@ $purple_500: #6B2ABC;
 $blue_900: #12192B;
 $blue_500: #41416E;
 
+// [variable-name] - готовая к использованию в формате var(--[variable-name]) переменная
+// [variable-name]-test - только числа для rgb формата. Создаем такую переменную, если нужен цвет с прозрачностью
+:root {
+	--test-base: 249, 249, 249;
+	--test: rgb(var(--test-base));
+}
+
 //adaptive
 $mobile: 360px;
 $tablet: 920px;
-$desktop: 1024px;
+$desktop: 1024px
